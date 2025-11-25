@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Fisika SMP</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Kalkulator Fisika SMP</h1>
+            <p>Alat bantu belajar fisika untuk siswa kelas 7, 8, dan 9</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Navigation -->
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="gerak">Gerak</button>
+                <button class="tab-btn" data-tab="pesawat">Pesawat Sederhana</button>
+                <button class="tab-btn" data-tab="newton">Hukum Newton</button>
+                <button class="tab-btn" data-tab="energi">Energi</button>
+                <button class="tab-btn" data-tab="listrik">Listrik</button>
+                <button class="tab-btn" data-tab="zat">Zat & Tekanan</button>
+            </nav>
+
+            <!-- Gerak -->
+            <div id="gerak" class="tab-content active">
+                <div class="calculator-card">
+                    <h3>🔷 Gerak Lurus Beraturan (GLB)</h3>
+                    <div class="input-group">
+                        <label>Kecepatan (m/s):</label>
+                        <input type="number" id="glb-kecepatan" placeholder="Contoh: 5">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu (s):</label>
+                        <input type="number" id="glb-waktu" placeholder="Contoh: 10">
+                    </div>
+                    <button onclick="hitungGLB()" class="calculate-btn">Hitung Jarak</button>
+                    <div id="glb-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>🚀 Gerak Lurus Berubah Beraturan (GLBB)</h3>
+                    <div class="input-group">
+                        <label>Kecepatan Awal (m/s):</label>
+                        <input type="number" id="glbb-vo" value="0" placeholder="Contoh: 0">
+                    </div>
+                    <div class="input-group">
+                        <label>Percepatan (m/s²):</label>
+                        <input type="number" id="glbb-percepatan" placeholder="Contoh: 2">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu (s):</label>
+                        <input type="number" id="glbb-waktu" placeholder="Contoh: 5">
+                    </div>
+                    <button onclick="hitungGLBB()" class="calculate-btn">Hitung Kecepatan & Jarak</button>
+                    <div id="glbb-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>⏱️ Kecepatan Rata-rata</h3>
+                    <div class="input-group">
+                        <label>Jarak Total (m):</label>
+                        <input type="number" id="avg-jarak" placeholder="Contoh: 100">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu Total (s):</label>
+                        <input type="number" id="avg-waktu" placeholder="Contoh: 20">
+                    </div>
+                    <button onclick="hitungKecepatanRata()" class="calculate-btn">Hitung Kecepatan Rata-rata</button>
+                    <div id="avg-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>🔄 Konversi Satuan Kecepatan</h3>
+                    <div class="input-group">
+                        <label>Nilai:</label>
+                        <input type="number" id="konv-nilai" placeholder="Contoh: 72">
+                    </div>
+                    <div class="input-group">
+                        <label>Dari:</label>
+                        <select id="konv-dari">
+                            <option value="km/jam">km/jam</option>
+                            <option value="m/s">m/s</option>
+                            <option value="m/menit">m/menit</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Ke:</label>
+                        <select id="konv-ke">
+                            <option value="m/s">m/s</option>
+                            <option value="km/jam">km/jam</option>
+                            <option value="m/menit">m/menit</option>
+                        </select>
+                    </div>
+                    <button onclick="konversiKecepatan()" class="calculate-btn">Konversi</button>
+                    <div id="konv-hasil" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Pesawat Sederhana -->
+            <div id="pesawat" class="tab-content">
+                <div class="calculator-card">
+                    <h3>🎯 Tuas (Pengungkit)</h3>
+                    <div class="input-group">
+                        <label>Beban (N):</label>
+                        <input type="number" id="tuas-beban" placeholder="Contoh: 100">
+                    </div>
+                    <div class="input-group">
+                        <label>Lengan Beban (m):</label>
+                        <input type="number" id="tuas-lb" placeholder="Contoh: 0.5">
+                    </div>
+                    <div class="input-group">
+                        <label>Lengan Kuasa (m):</label>
+                        <input type="number" id="tuas-lk" placeholder="Contoh: 2">
+                    </div>
+                    <button onclick="hitungTuas()" class="calculate-btn">Hitung Kuasa & Keuntungan Mekanis</button>
+                    <div id="tuas-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>⚖️ Bidang Miring</h3>
+                    <div class="input-group">
+                        <label>Beban (N):</label>
+                        <input type="number" id="bidang-beban" placeholder="Contoh: 500">
+                    </div>
+                    <div class="input-group">
+                        <label>Panjang Bidang (m):</label>
+                        <input type="number" id="bidang-panjang" placeholder="Contoh: 5">
+                    </div>
+                    <div class="input-group">
+                        <label>Tinggi Bidang (m):</label>
+                        <input type="number" id="bidang-tinggi" placeholder="Contoh: 1">
+                    </div>
+                    <button onclick="hitungBidangMiring()" class="calculate-btn">Hitung Kuasa & Keuntungan Mekanis</button>
+                    <div id="bidang-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>🎡 Katrol</h3>
+                    <div class="input-group">
+                        <label>Jenis Katrol:</label>
+                        <select id="katrol-jenis">
+                            <option value="tunggal">Katrol Tunggal</option>
+                            <option value="ganda">Katrol Ganda</option>
+                            <option value="bergerak">Katrol Bergerak</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Beban (N):</label>
+                        <input type="number" id="katrol-beban" placeholder="Contoh: 200">
+                    </div>
+                    <button onclick="hitungKatrol()" class="calculate-btn">Hitung Kuasa & Keuntungan Mekanis</button>
+                    <div id="katrol-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>🌀 Roda Berporos</h3>
+                    <div class="input-group">
+                        <label>Gaya pada Roda (N):</label>
+                        <input type="number" id="roda-gaya" placeholder="Contoh: 50">
+                    </div>
+                    <div class="input-group">
+                        <label>Jari-jari Roda (m):</label>
+                        <input type="number" id="roda-jari" placeholder="Contoh: 0.3">
+                    </div>
+                    <div class="input-group">
+                        <label>Jari-jari Poros (m):</label>
+                        <input type="number" id="roda-poros" placeholder="Contoh: 0.05">
+                    </div>
+                    <button onclick="hitungRodaBerporos()" class="calculate-btn">Hitung Keuntungan Mekanis</button>
+                    <div id="roda-hasil" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Hukum Newton -->
+            <div id="newton" class="tab-content">
+                <div class="calculator-card">
+                    <h3>📌 Hukum I Newton (Kelembaman)</h3>
+                    <div class="input-group">
+                        <label>Massa Benda (kg):</label>
+                        <input type="number" id="newton1-massa" placeholder="Contoh: 10">
+                    </div>
+                    <div class="input-group">
+                        <label>Keadaan:</label>
+                        <select id="newton1-keadaan">
+                            <option value="diam">Diam</option>
+                            <option value="bergerak">Bergerak Lurus Beraturan</option>
+                        </select>
+                    </div>
+                    <button onclick="hitungHukum1Newton()" class="calculate-btn">Analisis</button>
+                    <div id="newton1-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>🎯 Hukum II Newton</h3>
+                    <div class="input-group">
+                        <label>Massa (kg):</label>
+                        <input type="number" id="newton2-massa" placeholder="Contoh: 5">
+                    </div>
+                    <div class="input-group">
+                        <label>Percepatan (m/s²):</label>
+                        <input type="number" id="newton2-percepatan" placeholder="Contoh: 2">
+                    </div>
+                    <button onclick="hitungHukum2Newton()" class="calculate-btn">Hitung Gaya</button>
+                    <div id="newton2-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>⚖️ Hukum III Newton (Aksi-Reaksi)</h3>
+                    <div class="input-group">
+                        <label>Gaya Aksi (N):</label>
+                        <input type="number" id="newton3-aksi" placeholder="Contoh: 50">
+                    </div>
+                    <button onclick="hitungHukum3Newton()" class="calculate-btn">Hitung Gaya Reaksi</button>
+                    <div id="newton3-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>🏃 Gaya Gesek</h3>
+                    <div class="input-group">
+                        <label>Massa (kg):</label>
+                        <input type="number" id="gesek-massa" placeholder="Contoh: 20">
+                    </div>
+                    <div class="input-group">
+                        <label>Koefisien Gesek:</label>
+                        <input type="number" id="gesek-koefisien" step="0.1" placeholder="Contoh: 0.3">
+                    </div>
+                    <button onclick="hitungGayaGesek()" class="calculate-btn">Hitung Gaya Gesek</button>
+                    <div id="gesek-hasil" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Energi -->
+            <div id="energi" class="tab-content">
+                <div class="calculator-card">
+                    <h3>⚡ Energi Kinetik</h3>
+                    <div class="input-group">
+                        <label>Massa (kg):</label>
+                        <input type="number" id="ek-massa" placeholder="Contoh: 2">
+                    </div>
+                    <div class="input-group">
+                        <label>Kecepatan (m/s):</label>
+                        <input type="number" id="ek-kecepatan" placeholder="Contoh: 10">
+                    </div>
+                    <button onclick="hitungEnergiKinetik()" class="calculate-btn">Hitung Energi Kinetik</button>
+                    <div id="ek-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>🏔️ Energi Potensial</h3>
+                    <div class="input-group">
+                        <label>Massa (kg):</label>
+                        <input type="number" id="ep-massa" placeholder="Contoh: 5">
+                    </div>
+                    <div class="input-group">
+                        <label>Tinggi (m):</label>
+                        <input type="number" id="ep-tinggi" placeholder="Contoh: 8">
+                    </div>
+                    <button onclick="hitungEnergiPotensial()" class="calculate-btn">Hitung Energi Potensial</button>
+                    <div id="ep-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>🔄 Usaha</h3>
+                    <div class="input-group">
+                        <label>Gaya (N):</label>
+                        <input type="number" id="usaha-gaya" placeholder="Contoh: 20">
+                    </div>
+                    <div class="input-group">
+                        <label>Jarak (m):</label>
+                        <input type="number" id="usaha-jarak" placeholder="Contoh: 5">
+                    </div>
+                    <button onclick="hitungUsaha()" class="calculate-btn">Hitung Usaha</button>
+                    <div id="usaha-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>💡 Daya</h3>
+                    <div class="input-group">
+                        <label>Usaha (Joule):</label>
+                        <input type="number" id="daya-usaha" placeholder="Contoh: 1000">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu (s):</label>
+                        <input type="number" id="daya-waktu" placeholder="Contoh: 10">
+                    </div>
+                    <button onclick="hitungDaya()" class="calculate-btn">Hitung Daya</button>
+                    <div id="daya-hasil" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Listrik -->
+            <div id="listrik" class="tab-content">
+                <div class="calculator-card">
+                    <h3>🔌 Hukum Ohm</h3>
+                    <div class="input-group">
+                        <label>Tegangan (V):</label>
+                        <input type="number" id="ohm-tegangan" placeholder="Contoh: 12">
+                    </div>
+                    <div class="input-group">
+                        <label>Arus (A):</label>
+                        <input type="number" id="ohm-arus" placeholder="Contoh: 0.5">
+                    </div>
+                    <div class="input-group">
+                        <label>Hambatan (Ω):</label>
+                        <input type="number" id="ohm-hambatan" placeholder="Contoh: 24">
+                    </div>
+                    <button onclick="hitungHukumOhm()" class="calculate-btn">Hitung</button>
+                    <div id="ohm-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>💡 Daya Listrik</h3>
+                    <div class="input-group">
+                        <label>Tegangan (V):</label>
+                        <input type="number" id="dayalistrik-tegangan" placeholder="Contoh: 220">
+                    </div>
+                    <div class="input-group">
+                        <label>Arus (A):</label>
+                        <input type="number" id="dayalistrik-arus" placeholder="Contoh: 2">
+                    </div>
+                    <button onclick="hitungDayaListrik()" class="calculate-btn">Hitung Daya</button>
+                    <div id="dayalistrik-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>💰 Energi Listrik</h3>
+                    <div class="input-group">
+                        <label>Daya (Watt):</label>
+                        <input type="number" id="energilistrik-daya" placeholder="Contoh: 100">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu (jam):</label>
+                        <input type="number" id="energilistrik-waktu" placeholder="Contoh: 5">
+                    </div>
+                    <button onclick="hitungEnergiListrik()" class="calculate-btn">Hitung Energi</button>
+                    <div id="energilistrik-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>📊 Rangkaian Seri & Paralel</h3>
+                    <div class="input-group">
+                        <label>Jenis Rangkaian:</label>
+                        <select id="rangkaian-jenis">
+                            <option value="seri">Seri</option>
+                            <option value="paralel">Paralel</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Hambatan 1 (Ω):</label>
+                        <input type="number" id="rangkaian-r1" placeholder="Contoh: 10">
+                    </div>
+                    <div class="input-group">
+                        <label>Hambatan 2 (Ω):</label>
+                        <input type="number" id="rangkaian-r2" placeholder="Contoh: 20">
+                    </div>
+                    <button onclick="hitungRangkaian()" class="calculate-btn">Hitung Hambatan Total</button>
+                    <div id="rangkaian-hasil" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Zat & Tekanan -->
+            <div id="zat" class="tab-content">
+                <div class="calculator-card">
+                    <h3>💧 Massa Jenis</h3>
+                    <div class="input-group">
+                        <label>Massa (kg):</label>
+                        <input type="number" id="massa-massa" placeholder="Contoh: 2">
+                    </div>
+                    <div class="input-group">
+                        <label>Volume (m³):</label>
+                        <input type="number" id="massa-volume" placeholder="Contoh: 0.001">
+                    </div>
+                    <button onclick="hitungMassaJenis()" class="calculate-btn">Hitung Massa Jenis</button>
+                    <div id="massa-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>🌊 Tekanan Hidrostatis</h3>
+                    <div class="input-group">
+                        <label>Massa Jenis (kg/m³):</label>
+                        <input type="number" id="tekanan-massa-jenis" value="1000" placeholder="Contoh: 1000">
+                    </div>
+                    <div class="input-group">
+                        <label>Kedalaman (m):</label>
+                        <input type="number" id="tekanan-kedalaman" placeholder="Contoh: 5">
+                    </div>
+                    <button onclick="hitungTekananHidrostatis()" class="calculate-btn">Hitung Tekanan</button>
+                    <div id="tekanan-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>⚖️ Tekanan pada Zat Padat</h3>
+                    <div class="input-group">
+                        <label>Gaya (N):</label>
+                       <input type="number" id="tekanan-gaya" placeholder="Contoh: 100">
+                    </div>
+                    <div class="input-group">
+                        <label>Luas Permukaan (m²):</label>
+                        <input type="number" id="tekanan-luas" placeholder="Contoh: 0.01">
+                    </div>
+                    <button onclick="hitungTekananZatPadat()" class="calculate-btn">Hitung Tekanan</button>
+                    <div id="tekananpadat-hasil" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>🌡️ Pemuaian Panjang</h3>
+                    <div class="input-group">
+                        <label>Panjang Awal (m):</label>
+                        <input type="number" id="muai-panjang" placeholder="Contoh: 2">
+                    </div>
+                    <div class="input-group">
+                        <label>Koefisien Muai (1/°C):</label>
+                        <input type="number" id="muai-koefisien" step="0.00001" placeholder="Contoh: 0.000012">
+                    </div>
+                    <div class="input-group">
+                        <label>Perubahan Suhu (°C):</label>
+                        <input type="number" id="muai-suhu" placeholder="Contoh: 50">
+                    </div>
+                    <button onclick="hitungPemuaian()" class="calculate-btn">Hitung Pertambahan Panjang</button>
+                    <div id="muai-hasil" class="result"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Kalkulator Fisika SMP &copy; 2024 - Belajar Fisika Jadi Mudah!</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
