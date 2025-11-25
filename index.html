@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Fisika Sehari-hari</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.8.0/math.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Kalkulator Fisika Sehari-hari</h1>
+            <p>Alat praktis untuk menghitung masalah fisika dalam kehidupan sehari-hari</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Navigation -->
+            <nav class="nav-tabs">
+                <button class="tab-btn active" data-tab="kinematika">Kinematika</button>
+                <button class="tab-btn" data-tab="energi">Energi & Daya</button>
+                <button class="tab-btn" data-tab="listrik">Listrik</button>
+                <button class="tab-btn" data-tab="fluida">Fluida</button>
+                <button class="tab-btn" data-tab="termal">Termal</button>
+                <button class="tab-btn" data-tab="mekanika">Mekanika</button>
+            </nav>
+
+            <!-- Kinematika -->
+            <div id="kinematika" class="tab-content active">
+                <div class="calculator-card">
+                    <h3>Gerak Lurus Beraturan (GLB)</h3>
+                    <div class="input-group">
+                        <label>Kecepatan (m/s):</label>
+                        <input type="number" id="glb-velocity" placeholder="Contoh: 20">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu (s):</label>
+                        <input type="number" id="glb-time" placeholder="Contoh: 3600">
+                    </div>
+                    <button onclick="calculateGLB()" class="calculate-btn">Hitung Jarak</button>
+                    <div id="glb-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Gerak Lurus Berubah Beraturan (GLBB)</h3>
+                    <div class="input-group">
+                        <label>Kecepatan Awal (m/s):</label>
+                        <input type="number" id="glbb-v0" placeholder="Contoh: 0">
+                    </div>
+                    <div class="input-group">
+                        <label>Percepatan (m/s²):</label>
+                        <input type="number" id="glbb-acceleration" placeholder="Contoh: 9.8">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu (s):</label>
+                        <input type="number" id="glbb-time" placeholder="Contoh: 5">
+                    </div>
+                    <button onclick="calculateGLBB()" class="calculate-btn">Hitung Kecepatan & Jarak</button>
+                    <div id="glbb-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Konversi Kecepatan</h3>
+                    <div class="input-group">
+                        <label>Nilai:</label>
+                        <input type="number" id="speed-value" placeholder="Contoh: 60">
+                    </div>
+                    <div class="input-group">
+                        <label>Dari:</label>
+                        <select id="speed-from">
+                            <option value="m/s">m/s</option>
+                            <option value="km/h">km/jam</option>
+                            <option value="mph">mil/jam</option>
+                            <option value="knot">knot</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Ke:</label>
+                        <select id="speed-to">
+                            <option value="km/h">km/jam</option>
+                            <option value="m/s">m/s</option>
+                            <option value="mph">mil/jam</option>
+                            <option value="knot">knot</option>
+                        </select>
+                    </div>
+                    <button onclick="convertSpeed()" class="calculate-btn">Konversi</button>
+                    <div id="speed-result" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Energi & Daya -->
+            <div id="energi" class="tab-content">
+                <div class="calculator-card">
+                    <h3>Energi Kinetik</h3>
+                    <div class="input-group">
+                        <label>Massa (kg):</label>
+                        <input type="number" id="ek-mass" placeholder="Contoh: 70">
+                    </div>
+                    <div class="input-group">
+                        <label>Kecepatan (m/s):</label>
+                        <input type="number" id="ek-velocity" placeholder="Contoh: 15">
+                    </div>
+                    <button onclick="calculateKineticEnergy()" class="calculate-btn">Hitung Energi Kinetik</button>
+                    <div id="ek-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Energi Potensial</h3>
+                    <div class="input-group">
+                        <label>Massa (kg):</label>
+                        <input type="number" id="ep-mass" placeholder="Contoh: 2">
+                    </div>
+                    <div class="input-group">
+                        <label>Tinggi (m):</label>
+                        <input type="number" id="ep-height" placeholder="Contoh: 10">
+                    </div>
+                    <button onclick="calculatePotentialEnergy()" class="calculate-btn">Hitung Energi Potensial</button>
+                    <div id="ep-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Daya Listrik</h3>
+                    <div class="input-group">
+                        <label>Tegangan (Volt):</label>
+                        <input type="number" id="power-voltage" placeholder="Contoh: 220">
+                    </div>
+                    <div class="input-group">
+                        <label>Arus (Ampere):</label>
+                        <input type="number" id="power-current" placeholder="Contoh: 2">
+                    </div>
+                    <button onclick="calculatePower()" class="calculate-btn">Hitung Daya</button>
+                    <div id="power-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Biaya Listrik</h3>
+                    <div class="input-group">
+                        <label>Daya (Watt):</label>
+                        <input type="number" id="cost-power" placeholder="Contoh: 100">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu Pemakaian (jam):</label>
+                        <input type="number" id="cost-time" placeholder="Contoh: 8">
+                    </div>
+                    <div class="input-group">
+                        <label>Tarif per kWh (Rp):</label>
+                        <input type="number" id="cost-rate" placeholder="Contoh: 1500">
+                    </div>
+                    <button onclick="calculateElectricityCost()" class="calculate-btn">Hitung Biaya</button>
+                    <div id="cost-result" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Listrik -->
+            <div id="listrik" class="tab-content">
+                <div class="calculator-card">
+                    <h3>Hukum Ohm</h3>
+                    <div class="input-group">
+                        <label>Tegangan (V):</label>
+                        <input type="number" id="ohm-voltage" placeholder="Contoh: 12">
+                    </div>
+                    <div class="input-group">
+                        <label>Arus (A):</label>
+                        <input type="number" id="ohm-current" placeholder="Contoh: 0.5">
+                    </div>
+                    <div class="input-group">
+                        <label>Hambatan (Ω):</label>
+                        <input type="number" id="ohm-resistance" placeholder="Contoh: 24">
+                    </div>
+                    <button onclick="calculateOhmLaw()" class="calculate-btn">Hitung</button>
+                    <div id="ohm-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Energi Listrik</h3>
+                    <div class="input-group">
+                        <label>Daya (Watt):</label>
+                        <input type="number" id="energy-power" placeholder="Contoh: 1000">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu (jam):</label>
+                        <input type="number" id="energy-time" placeholder="Contoh: 2">
+                    </div>
+                    <button onclick="calculateElectricalEnergy()" class="calculate-btn">Hitung Energi</button>
+                    <div id="energy-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Biaya Charger HP</h3>
+                    <div class="input-group">
+                        <label>Daya Charger (Watt):</label>
+                        <input type="number" id="charger-power" value="18" placeholder="Contoh: 18">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu Charge (jam):</label>
+                        <input type="number" id="charger-time" placeholder="Contoh: 2">
+                    </div>
+                    <div class="input-group">
+                        <label>Tarif per kWh (Rp):</label>
+                        <input type="number" id="charger-rate" value="1500" placeholder="Contoh: 1500">
+                    </div>
+                    <button onclick="calculateChargerCost()" class="calculate-btn">Hitung Biaya</button>
+                    <div id="charger-result" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Fluida -->
+            <div id="fluida" class="tab-content">
+                <div class="calculator-card">
+                    <h3>Tekanan Hidrostatis</h3>
+                    <div class="input-group">
+                        <label>Massa Jenis (kg/m³):</label>
+                        <input type="number" id="density-fluid" value="1000" placeholder="Contoh: 1000">
+                    </div>
+                    <div class="input-group">
+                        <label>Kedalaman (m):</label>
+                        <input type="number" id="depth-fluid" placeholder="Contoh: 5">
+                    </div>
+                    <button onclick="calculateHydrostaticPressure()" class="calculate-btn">Hitung Tekanan</button>
+                    <div id="hydrostatic-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Debit Air</h3>
+                    <div class="input-group">
+                        <label>Volume (liter):</label>
+                        <input type="number" id="volume-flow" placeholder="Contoh: 100">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu (detik):</label>
+                        <input type="number" id="time-flow" placeholder="Contoh: 60">
+                    </div>
+                    <button onclick="calculateFlowRate()" class="calculate-btn">Hitung Debit</button>
+                    <div id="flow-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Biaya Air PDAM</h3>
+                    <div class="input-group">
+                        <label>Pemakaian Air (m³):</label>
+                        <input type="number" id="water-usage" placeholder="Contoh: 30">
+                    </div>
+                    <div class="input-group">
+                        <label>Tarif per m³ (Rp):</label>
+                        <input type="number" id="water-rate" value="5000" placeholder="Contoh: 5000">
+                    </div>
+                    <button onclick="calculateWaterCost()" class="calculate-btn">Hitung Biaya</button>
+                    <div id="water-result" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Termal -->
+            <div id="termal" class="tab-content">
+                <div class="calculator-card">
+                    <h3>Kalor</h3>
+                    <div class="input-group">
+                        <label>Massa (kg):</label>
+                        <input type="number" id="heat-mass" placeholder="Contoh: 1">
+                    </div>
+                    <div class="input-group">
+                        <label>Kalor Jenis (J/kg°C):</label>
+                        <input type="number" id="heat-capacity" value="4200" placeholder="Contoh: 4200">
+                    </div>
+                    <div class="input-group">
+                        <label>Perubahan Suhu (°C):</label>
+                        <input type="number" id="heat-delta-t" placeholder="Contoh: 80">
+                    </div>
+                    <button onclick="calculateHeat()" class="calculate-btn">Hitung Kalor</button>
+                    <div id="heat-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Biaya Memasak Air</h3>
+                    <div class="input-group">
+                        <label>Volume Air (liter):</label>
+                        <input type="number" id="boil-volume" placeholder="Contoh: 2">
+                    </div>
+                    <div class="input-group">
+                        <label>Suhu Awal (°C):</label>
+                        <input type="number" id="boil-temp-initial" value="25" placeholder="Contoh: 25">
+                    </div>
+                    <div class="input-group">
+                        <label>Daya Kompor (Watt):</label>
+                        <input type="number" id="boil-power" value="1000" placeholder="Contoh: 1000">
+                    </div>
+                    <button onclick="calculateBoilingCost()" class="calculate-btn">Hitung Waktu & Biaya</button>
+                    <div id="boil-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Konversi Suhu</h3>
+                    <div class="input-group">
+                        <label>Suhu:</label>
+                        <input type="number" id="temp-value" placeholder="Contoh: 100">
+                    </div>
+                    <div class="input-group">
+                        <label>Dari:</label>
+                        <select id="temp-from">
+                            <option value="celsius">Celsius</option>
+                            <option value="fahrenheit">Fahrenheit</option>
+                            <option value="kelvin">Kelvin</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Ke:</label>
+                        <select id="temp-to">
+                            <option value="fahrenheit">Fahrenheit</option>
+                            <option value="celsius">Celsius</option>
+                            <option value="kelvin">Kelvin</option>
+                        </select>
+                    </div>
+                    <button onclick="convertTemperature()" class="calculate-btn">Konversi</button>
+                    <div id="temp-result" class="result"></div>
+                </div>
+            </div>
+
+            <!-- Mekanika -->
+            <div id="mekanika" class="tab-content">
+                <div class="calculator-card">
+                    <h3>Gaya</h3>
+                    <div class="input-group">
+                        <label>Massa (kg):</label>
+                        <input type="number" id="force-mass" placeholder="Contoh: 10">
+                    </div>
+                    <div class="input-group">
+                        <label>Percepatan (m/s²):</label>
+                        <input type="number" id="force-acceleration" placeholder="Contoh: 9.8">
+                    </div>
+                    <button onclick="calculateForce()" class="calculate-btn">Hitung Gaya</button>
+                    <div id="force-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Usaha</h3>
+                    <div class="input-group">
+                        <label>Gaya (N):</label>
+                        <input type="number" id="work-force" placeholder="Contoh: 50">
+                    </div>
+                    <div class="input-group">
+                        <label>Jarak (m):</label>
+                        <input type="number" id="work-distance" placeholder="Contoh: 10">
+                    </div>
+                    <button onclick="calculateWork()" class="calculate-btn">Hitung Usaha</button>
+                    <div id="work-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Daya Mekanik</h3>
+                    <div class="input-group">
+                        <label>Usaha (Joule):</label>
+                        <input type="number" id="mech-power-work" placeholder="Contoh: 1000">
+                    </div>
+                    <div class="input-group">
+                        <label>Waktu (s):</label>
+                        <input type="number" id="mech-power-time" placeholder="Contoh: 60">
+                    </div>
+                    <button onclick="calculateMechanicalPower()" class="calculate-btn">Hitung Daya</button>
+                    <div id="mech-power-result" class="result"></div>
+                </div>
+
+                <div class="calculator-card">
+                    <h3>Momentum</h3>
+                    <div class="input-group">
+                        <label>Massa (kg):</label>
+                        <input type="number" id="momentum-mass" placeholder="Contoh: 5">
+                    </div>
+                    <div class="input-group">
+                        <label>Kecepatan (m/s):</label>
+                        <input type="number" id="momentum-velocity" placeholder="Contoh: 20">
+                    </div>
+                    <button onclick="calculateMomentum()" class="calculate-btn">Hitung Momentum</button>
+                    <div id="momentum-result" class="result"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Kalkulator Fisika Sehari-hari &copy; 2024 - Praktis dan Mudah Digunakan</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
